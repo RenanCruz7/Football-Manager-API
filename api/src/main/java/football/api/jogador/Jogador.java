@@ -17,7 +17,7 @@ public class Jogador {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
-    private String idade;
+    private Integer idade;
     @Enumerated(EnumType.STRING)
     private Posicao posicao;
     @Enumerated(EnumType.STRING)
