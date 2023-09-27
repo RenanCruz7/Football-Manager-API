@@ -1,0 +1,1 @@
+alter table jogadores add fornecedor varchar(50) not null;

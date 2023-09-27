@@ -22,10 +22,12 @@ public class Jogador {
     private Posicao posicao;
     @Enumerated(EnumType.STRING)
     private Pe pe;
+    private String fornecedor;
 
     public Jogador(DadosCadastroJogador dados) {
         this.nome = dados.nome();
         this.idade = dados.idade();
+        this.fornecedor = dados.fornecedor();
         this.posicao = dados.posicao();
         this.pe = dados.pe();
     }
