@@ -5,11 +5,16 @@ import football.api.jogador.Jogador;
 import football.api.jogador.JogadorRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
+
 
 @RestController
 @RequestMapping("jogadores")
@@ -23,4 +28,18 @@ public class JogadorController {
     public void cadastrar(@RequestBody @Valid DadosCadastroJogador dados){
         repository.save(new Jogador(dados));
     }
+
+
+    @GetMapping
+    public Page<Jogador> listar(@PageableDefault(size = 10,sort = "nome") Pageable paginacao){
+        return repository.findAll(paginacao);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Jogador> getJogadorPorId(@PathVariable Long id) {
+        Optional<Jogador> jogador = repository.findById(id);
+        return jogador.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+
 }

@@ -5,6 +5,8 @@ import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 
+//DTO
+
 public record DadosCadastroTime(
         @NotBlank
         String nome,
