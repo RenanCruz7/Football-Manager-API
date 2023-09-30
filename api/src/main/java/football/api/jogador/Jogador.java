@@ -23,12 +23,30 @@ public class Jogador {
     @Enumerated(EnumType.STRING)
     private Pe pe;
     private String fornecedor;
+    private Boolean ativo;
 
     public Jogador(DadosCadastroJogador dados) {
+        this.ativo = true;
         this.nome = dados.nome();
         this.idade = dados.idade();
         this.fornecedor = dados.fornecedor();
         this.posicao = dados.posicao();
         this.pe = dados.pe();
+    }
+
+    public void atualizarInformacoes(DadosAtualizaJogador dados) {
+        if(dados.idade() != null){
+            this.idade = dados.idade();
+        }
+        if(dados.fornecedor() != null){
+            this.fornecedor = dados.fornecedor();
+        }
+        if(dados.posicao() != null){
+            this.posicao = dados.posicao();
+        }
+    }
+
+    public void excluir() {
+        this.ativo = false;
     }
 }

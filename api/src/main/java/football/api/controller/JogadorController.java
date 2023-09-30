@@ -1,5 +1,6 @@
 package football.api.controller;
 
+import football.api.jogador.DadosAtualizaJogador;
 import football.api.jogador.DadosCadastroJogador;
 import football.api.jogador.Jogador;
 import football.api.jogador.JogadorRepository;
@@ -32,13 +33,29 @@ public class JogadorController {
 
     @GetMapping
     public Page<Jogador> listar(@PageableDefault(size = 10,sort = "nome") Pageable paginacao){
-        return repository.findAll(paginacao);
+        return repository.findAllByAtivoTrue(paginacao);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Jogador> getJogadorPorId(@PathVariable Long id) {
         Optional<Jogador> jogador = repository.findById(id);
         return jogador.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @PutMapping
+    @Transactional
+    public void atualizar(@RequestBody @Valid DadosAtualizaJogador dados){
+        var jogador = repository.getReferenceById(dados.id());
+        jogador.atualizarInformacoes(dados);
+    }
+
+    //Exclusão fisica (apaga do banco)
+    @DeleteMapping("/{id}")
+    @Transactional
+    public void excluir(@PathVariable Long id){
+        //repository.deleteById(id);
+        var jogador = repository.getReferenceById(id);
+        jogador.excluir();
     }
 
 
