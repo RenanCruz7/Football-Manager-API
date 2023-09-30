@@ -1,7 +1,9 @@
 package football.api.controller;
 
+import football.api.jogador.DadosAtualizaJogador;
 import football.api.jogador.Jogador;
 import football.api.jogador.JogadorRepository;
+import football.api.time.DadosAtualizaTime;
 import football.api.time.DadosCadastroTime;
 import football.api.time.Time;
 import football.api.time.TimeRepository;
@@ -39,6 +41,22 @@ public class TimeController {
     public ResponseEntity<Time> getTimePorId(@PathVariable Long id) {
         Optional<Time> time = repository.findById(id);
         return time.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @PutMapping
+    @Transactional
+    public void atualizar(@RequestBody @Valid DadosAtualizaTime dados){
+        var time = repository.getReferenceById(dados.id());
+        time.atualizarInformacoes(dados);
+    }
+
+    //Exclusão fisica (apaga do banco)
+    @DeleteMapping("/{id}")
+    @Transactional
+    public void excluir(@PathVariable Long id){
+        //repository.deleteById(id);
+        var time = repository.getReferenceById(id);
+        time.excluir();
     }
 
 }
