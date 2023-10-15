@@ -8,5 +8,4 @@ public record DadosAtualizaJogador(
         Integer idade,
         String fornecedor,
         Posicao posicao) {
-
 }
