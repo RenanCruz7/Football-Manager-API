@@ -9,12 +9,15 @@ import football.api.time.Time;
 import football.api.time.TimeRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.List;
 import java.util.Optional;
@@ -33,7 +36,7 @@ public class TimeController {
     }
 
     @GetMapping
-    public Page<Time> listar(@PageableDefault(size = 10,sort = "nome") Pageable paginacao){
+    public Page<Time> listar(@PageableDefault(size = 100000 ,sort = "nome") Pageable paginacao){
         return repository.findAll(paginacao);
     }
 
@@ -58,5 +61,5 @@ public class TimeController {
         var time = repository.getReferenceById(id);
         time.excluir();
     }
-
 }
+

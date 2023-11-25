@@ -35,7 +35,7 @@ public class JogadorController {
 
 
     @GetMapping
-    public Page<Jogador> listar(@PageableDefault(size = 10, sort = "nome") Pageable paginacao) {
+    public Page<Jogador> listar(@PageableDefault(size = 100000, sort = "nome") Pageable paginacao) {
         return repository.findAllByAtivoTrue(paginacao);
     }
 
